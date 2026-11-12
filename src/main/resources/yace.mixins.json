@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "package": "net.fneifnox.yace.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "accessor.AbstractWidgetAccessor",
+    "accessor.ControllerWidgetAccessor",
+    "ControllerWidgetMixin",
+    "accessor.StringControllerElementAccessor",
+    "StringControllerElementMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "client": [
+    "LegacySelectionListMixin",
+    "OptionListWidgetMixin"
+	]
+}

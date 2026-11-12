@@ -1,0 +1,33 @@
+{
+	"schemaVersion": 1,
+	"id": "yace",
+	"version": "${version}",
+	"name": "YetAnotherConfigEnhancement (YACE)",
+	"description": "Library for YetAnotherConfigLib (YACL) which adds new ways for developers to customize their config menu.",
+	"authors": [
+		"Fneifnox"
+	],
+	"contact": {
+		"homepage": "https://discord.gg/bszSDCq5ms",
+		"sources": "https://github.com/Fneifnox/yace",
+		"issues": "https://github.com/Fneifnox/yace/issues"
+	},
+	"license": "Fneifnox's License",
+	"icon": "assets/yace/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.fneifnox.yace.YetAnotherConfigEnhancement"
+		]
+	},
+	"mixins": [
+		"yace.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": ">=1.21 <1.21.2",
+		"java": ">=21",
+		"fabric-api": "*",
+		"yet_another_config_lib_v3": "*"
+	}
+}
