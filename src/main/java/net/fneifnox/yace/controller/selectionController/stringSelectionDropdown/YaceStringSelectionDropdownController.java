@@ -31,6 +31,6 @@ public class YaceStringSelectionDropdownController extends DropdownStringControl
 
     @Override
     public AbstractWidget provideWidget(YACLScreen screen, Dimension<Integer> widgetDimension) {
-        return new YaceStringSelectionDropdownControllerElement(this, screen, widgetDimension) {};
+        return new YaceStringSelectionDropdownControllerElement(this, screen, widgetDimension);
     }
 }

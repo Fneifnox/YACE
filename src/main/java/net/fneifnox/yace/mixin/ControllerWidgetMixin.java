@@ -4,6 +4,8 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.isxander.yacl3.api.Controller;
 import dev.isxander.yacl3.gui.controllers.ControllerWidget;
+import dev.isxander.yacl3.gui.controllers.slider.ISliderController;
+import dev.isxander.yacl3.gui.controllers.string.IStringController;
 import net.fneifnox.yace.controller.WidgetIconRenderer;
 import net.fneifnox.yace.controller.selectionController.item.YaceItemController;
 import net.minecraft.client.font.TextRenderer;
@@ -27,6 +29,9 @@ public abstract class ControllerWidgetMixin {
 
     @Shadow
     protected abstract Text getValueText();
+
+    @Shadow
+    protected boolean focused;
 
     // Moves text at the controller widgets in order that they don't overlap with the icon
     @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawText(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/text/Text;IIIZ)I"))
@@ -56,8 +61,13 @@ public abstract class ControllerWidgetMixin {
     private void checkForSliderHovering(DrawContext graphics, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         ControllerWidget<?> controllerWidget = (ControllerWidget<?>)(Object)this;
         if (this.control instanceof WidgetIconRenderer widgetIconRenderer) {
-            widgetIconRenderer.data().hoveredOverCorrectly().set(
-                    isHoveredOverSlider(mouseX, mouseY, controllerWidget.getDimension(), 0.35f, 20));
+            if (this.control instanceof IStringController<?>) {
+                widgetIconRenderer.data().hoveredOverCorrectly().set(focused);
+            }
+            else if (this.control instanceof ISliderController<?>) {
+                widgetIconRenderer.data().hoveredOverCorrectly().set(
+                        isHoveredOverSlider(mouseX, mouseY, controllerWidget.getDimension(), 0.35f, 20));
+            }
         }
     }
 

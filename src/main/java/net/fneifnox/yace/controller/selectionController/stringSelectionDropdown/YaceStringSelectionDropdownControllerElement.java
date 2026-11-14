@@ -34,7 +34,13 @@ public class YaceStringSelectionDropdownControllerElement extends ControllerWidg
 
     @Override
     protected int getHoveredControlWidth() {
-        return getDimension().width();
+        return Math.min(textRenderer.getWidth(getValueText()), getUnshiftedLength());
+    }
+
+    public int getUnshiftedLength() {
+        if (optionNameString.isEmpty())
+            return getDimension().width() - getXPadding() * 2;
+        return getDimension().width() / 8 * 5;
     }
 
     private String getCurrentValue() {
@@ -50,6 +56,7 @@ public class YaceStringSelectionDropdownControllerElement extends ControllerWidg
     }
 
     private void openDropdown() {
+        if (!isAvailable()) return;
         YaceStringSelectionDropdownController dropdownController = this.control;
 
         var dummyElement = new AbstractDropdownControllerElement<String, String>(dropdownController, screen, getDimension()) {
@@ -78,12 +85,8 @@ public class YaceStringSelectionDropdownControllerElement extends ControllerWidg
                 getDimension(),
                 dummyElement,
                 dropdownController.getAllowedValues(),
-                selectedValue -> {
-                    dropdownController.option().requestSet(selectedValue);
-                },
-                () -> {
-                    this.dropdownWidget = null;
-                }
+                selectedValue -> dropdownController.option().requestSet(selectedValue),
+                () -> this.dropdownWidget = null
         );
 
         screen.addPopupControllerWidget(dropdownWidget);
@@ -113,6 +116,7 @@ public class YaceStringSelectionDropdownControllerElement extends ControllerWidg
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (!isAvailable()) return false;
         return this.button.mouseClicked(mouseX, mouseY, button);
     }
 
